@@ -2,13 +2,37 @@
   <div class="hello">
     <h1>Todo List</h1>
     <div class="list-actions">
-      <input v-model="taskText">
-      <button type="button" name="button" @click="addTodo(taskText)">Add a Task</button>
+      <input :value="newTodo" @change="getTodo" placeholder="I need to...">
+      <button type="button" name="button" @click="addTodo">Add Todo</button>
     </div>
 
     <div class="">
-      <ul v-for="todo in $store.state.todoList">
-          <li>{{todo.text}}</li>
+      <h3 v-if="todos.length > 0">Current({{todos.length}})</h3>
+      <ul v-for="todo in todos">
+        <li>{{todo.body}}&nbsp;
+          <div class="btn-group">
+              <button type="button" @click="edit(todo)" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-edit"></span> Edit
+              </button>
+              <button type="button" @click="complete(todo)" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-ok-circle"></span> Complete
+              </button>
+              <button type="button" @click="remove(todo)" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-remove-circle"></span> Remove
+              </button>
+            </div>
+        </li>
+      </ul>
+    </div>
+    <div class="">
+      <h3 v-if="todos.length > 0">Completed({{completed.length}})</h3>
+      <ul v-for="todo in completed">
+        <li class="list-group-item">
+          {{todo.body}} &nbsp;
+          <button type="button" @click="remove(todo)" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-circle"></span> Remove
+          </button>
+        </li>
       </ul>
     </div>
   </div>
@@ -16,23 +40,40 @@
 </template>
 
 <script>
-import { addTodo } from '../vuex/actions'
-import { mapGetters, mapActions } from 'vuex'
-
 export default {
   name: 'TodoList',
-  data () {
-    return {
-      taskText: '',
-      todos: []
+  computed:{
+    newTodo () {
+      return this.$store.getters.newTodo
+    },
+    todos(){
+      return this.$store.getters.todos
+    },
+    completed(){
+      return this.$store.getters.completedTodos
     }
   },
-  computed: mapGetters ([
-    'all'
-  ]),
-  methods: mapActions ([
-    'addTodo'
-  ])
+  methods: {
+    getTodo (e) {
+      this.$store.dispatch('getTodo', e.target.value)
+    },
+    addTodo () {
+      this.$store.dispatch('addTodo')
+      this.$store.dispatch('clearTodo')
+    },
+    edit(todo){
+      this.$store.dispatch('editTodo', todo)
+    },
+    complete(todo){
+      this.$store.dispatch('completeTodo', todo)
+    },
+    remove(todo){
+      this.$store.dispatch('removeTodo', todo)
+    },
+    remove(todo){
+      this.$store.dispatch('removeTodo', todo)
+    }
+  }
 }
 </script>
 
@@ -56,5 +97,9 @@ a {
 .list-actions {
   width:100%;
   height: 50px;
+}
+
+.btn-group{
+    float: right;
 }
 </style>
