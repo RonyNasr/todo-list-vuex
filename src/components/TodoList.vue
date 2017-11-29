@@ -8,9 +8,10 @@
 
     <div class="">
       <h3 v-if="todos.length > 0">Current({{todos.length}})</h3>
-      <ul v-for="todo in todos">
-        <li>{{todo.body}}&nbsp;
-          <div class="btn-group">
+      <ul>
+        <li v-for="todo in todos">
+          <div>
+              {{todo.body}}&nbsp;
               <button type="button" @click="edit(todo)" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-edit"></span> Edit
               </button>
@@ -25,9 +26,9 @@
       </ul>
     </div>
     <div class="">
-      <h3 v-if="todos.length > 0">Completed({{completed.length}})</h3>
-      <ul v-for="todo in completed">
-        <li class="list-group-item">
+      <h3 v-if="completed.length > 0">Completed({{completed.length}})</h3>
+      <ul>
+        <li v-for="todo in completed">
           {{todo.body}} &nbsp;
           <button type="button" @click="remove(todo)" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-circle"></span> Remove
@@ -42,14 +43,14 @@
 <script>
 export default {
   name: 'TodoList',
-  computed:{
+  computed: {
     newTodo () {
       return this.$store.getters.newTodo
     },
-    todos(){
+    todos () {
       return this.$store.getters.todos
     },
-    completed(){
+    completed () {
       return this.$store.getters.completedTodos
     }
   },
@@ -61,16 +62,13 @@ export default {
       this.$store.dispatch('addTodo')
       this.$store.dispatch('clearTodo')
     },
-    edit(todo){
+    edit (todo) {
       this.$store.dispatch('editTodo', todo)
     },
-    complete(todo){
+    complete (todo) {
       this.$store.dispatch('completeTodo', todo)
     },
-    remove(todo){
-      this.$store.dispatch('removeTodo', todo)
-    },
-    remove(todo){
+    remove (todo) {
       this.$store.dispatch('removeTodo', todo)
     }
   }
@@ -87,7 +85,7 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+  display: block;
   margin: 0 10px;
 }
 a {
