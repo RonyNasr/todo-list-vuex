@@ -1,4 +1,5 @@
 import * as todo from '@/store/modules/todo'
+import { testAction } from '../helpers'
 
 describe('mutations', () => {
   it('GET_TODO', () => {
@@ -56,5 +57,21 @@ describe('getters', () => {
     const result = todo.default.getters.completedTodos(state)
 
     expect(result).to.deep.equal([{body: 'todo2', done: true}])
+  })
+})
+
+describe('actions', () => {
+  it('getTodo from input text', (done) => {
+    const state = {
+      newTodo: null
+    }
+    testAction(
+      todo.default.actions.getTodo,
+      'new todo',
+      state,
+      [
+        {type: 'GET_TODO', payload: 'new todo'}
+      ],
+    done)
   })
 })
