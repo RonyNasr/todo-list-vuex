@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>Todo List</h1>
     <div class="list-actions">
-      <input :value="newTodo" @change="getTodo" placeholder="I need to...">
+      <input :value="newTodo" @change="getTodo()" placeholder="I need to...">
       <button type="button" name="button" @click="addTodo">Add Todo</button>
     </div>
 
@@ -41,20 +41,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+// import { mapActions } from 'vuex'
+
 export default {
   name: 'TodoList',
   computed: {
-    newTodo () {
-      return this.$store.getters.newTodo
-    },
-    todos () {
-      return this.$store.getters.todos
-    },
-    completed () {
-      return this.$store.getters.completedTodos
-    }
+    ...mapGetters({
+      newTodo: 'newTodo',
+      todos: 'todos',
+      completed: 'completedTodos'
+    })
   },
   methods: {
+    // ...mapActions({
+    //   getTodo: 'getTodo',
+    //   addTodo: 'addTodo|clearTodo',
+    //   edit: 'editTodo',
+    //   complete: 'completeTodo',
+    //   remove: 'removeTodo'
+    // })
     getTodo (e) {
       this.$store.dispatch('getTodo', e.target.value)
     },
