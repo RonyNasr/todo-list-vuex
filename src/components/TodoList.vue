@@ -1,9 +1,11 @@
 <template>
   <div class="hello">
-    <h1>Todo List</h1>
+    <div id="title_anchor" ></div>
+    <div id="page_title" :class="affix ? 'affix' : ''" class="list-actions"></div>
+    <h1 >Todo List</h1>
     <div class="list-actions">
       <input :value="newTodo" @change="getTodo()" placeholder="I need to...">
-      <button type="button" name="button" @click="addTodo">Add Todo</button>
+      <button type="button" name="button" @click="addTodo()">Add Todo</button>
     </div>
 
     <div class="">
@@ -46,6 +48,17 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'TodoList',
+  data () {
+    return {
+      affix: false
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   computed: {
     ...mapGetters({
       newTodo: 'newTodo',
@@ -54,13 +67,6 @@ export default {
     })
   },
   methods: {
-    // ...mapActions({
-    //   getTodo: 'getTodo',
-    //   addTodo: 'addTodo|clearTodo',
-    //   edit: 'editTodo',
-    //   complete: 'completeTodo',
-    //   remove: 'removeTodo'
-    // })
     getTodo (e) {
       this.$store.dispatch('getTodo', e.target.value)
     },
@@ -76,6 +82,19 @@ export default {
     },
     remove (todo) {
       this.$store.dispatch('removeTodo', todo)
+    },
+    handleScroll: function (event) {
+      var scrollTop = window.document.body.scrollTop
+// console.log(window.document.getElementById("title_anchor").styles)
+      var titleAnchor = window.document.getElementById('title_anchor').getBoundingClientRect().top
+      var offsetTop = window.document.getElementById('page_title').getBoundingClientRect().top
+      console.log(scrollTop + ', ' + titleAnchor)
+      if (scrollTop >= titleAnchor) {
+        this.affix = true
+      } else if (scrollTop < titleAnchor) {
+        this.affix = false
+      }
+      console.log(this.affix)
     }
   }
 }
@@ -105,5 +124,18 @@ a {
 
 .btn-group{
     float: right;
+}
+
+#title_anchor {
+  height: 0px;
+  width: 100%;
+}
+
+.affix {
+  border-bottom: 3px solid #F1F1F1;
+  position : fixed;
+  top: 20px;
+  z-index: 1000;
+  background-color: #000000;
 }
 </style>

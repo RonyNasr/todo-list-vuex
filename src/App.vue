@@ -22,7 +22,7 @@ export default {
 }
 
 .container {
-  height: 100%;
+  height: 3000px;
   width: 70%;
   padding: 20px;
   margin: 0 auto;
