@@ -103,7 +103,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 $link-color: #42b983;
-$black-background: #FFFFFF;
+$black-background: #BADA55;
+$border-color: #000000;
 
 h1, h2 {
   font-weight: normal;
@@ -135,7 +136,7 @@ a {
 }
 
 .affix {
-  border-bottom: 3px solid #F1F1F1;
+  border-bottom: 3px solid $border-color;
   position : fixed;
   top: 20px;
   z-index: 1000;
