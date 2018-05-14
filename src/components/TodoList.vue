@@ -4,7 +4,7 @@
     <div id="page_title" :class="affix ? 'affix' : ''" class="list-actions"></div>
     <h1 >Todo List</h1>
     <div class="list-actions">
-      <input :value="newTodo" @change="getTodo()" placeholder="I need to...">
+      <input :value="newTodo" @change="getTodo" placeholder="I need to...">
       <button type="button" name="button" @click="addTodo()">Add Todo</button>
     </div>
 
@@ -27,7 +27,7 @@
         </li>
       </ul>
     </div>
-    <div class="">
+    <div class="affix">
       <h3 v-if="completed.length > 0">Completed({{completed.length}})</h3>
       <ul>
         <li v-for="todo in completed">
@@ -87,7 +87,7 @@ export default {
       var scrollTop = window.document.body.scrollTop
 // console.log(window.document.getElementById("title_anchor").styles)
       var titleAnchor = window.document.getElementById('title_anchor').getBoundingClientRect().top
-      var offsetTop = window.document.getElementById('page_title').getBoundingClientRect().top
+      // var offsetTop = window.document.getElementById('page_title').getBoundingClientRect().top
       console.log(scrollTop + ', ' + titleAnchor)
       if (scrollTop >= titleAnchor) {
         this.affix = true
@@ -101,7 +101,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+$link-color: #42b983;
+$black-background: #FFFFFF;
+
 h1, h2 {
   font-weight: normal;
 }
@@ -114,7 +117,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color:$link-color ;
 }
 
 .list-actions {
@@ -136,6 +139,6 @@ a {
   position : fixed;
   top: 20px;
   z-index: 1000;
-  background-color: #000000;
+  background-color: $black-background;
 }
 </style>
