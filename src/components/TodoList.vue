@@ -136,8 +136,7 @@ a {
 }
 
 .affix {
-  border-bottom: 3px solid, @border-color;
-  border-color: @border-color;
+  border-bottom: 3px solid @border-color;
   position : fixed;
   top: 20px;
   z-index: 1000;
