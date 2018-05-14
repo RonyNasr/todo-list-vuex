@@ -101,9 +101,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-$link-color: #42b983;
-$black-background: #FFFFFF;
+<style lang="less" scoped>
+@link-color: #42b983;
+@black-background: #000000;
+@border-color: #F1F1F1
 
 h1, h2 {
   font-weight: normal;
@@ -117,7 +118,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color:$link-color ;
+  color: @link-color ;
 }
 
 .list-actions {
@@ -135,10 +136,11 @@ a {
 }
 
 .affix {
-  border-bottom: 3px solid #F1F1F1;
+  border-bottom: 3px solid, @border-color;
+  border-color: @border-color;
   position : fixed;
   top: 20px;
   z-index: 1000;
-  background-color: $black-background;
+  background-color: @black-background;
 }
 </style>
